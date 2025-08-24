@@ -1,0 +1,30 @@
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  padding-top: 60px;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.modalContent {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 450px;
+  transform: translateY(-30px);
+  opacity: 0;
+  animation: modalIn 0.3s forwards;
+}
+
+
+@keyframes modalIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

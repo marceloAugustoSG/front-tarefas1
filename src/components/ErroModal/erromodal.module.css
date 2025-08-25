@@ -1,0 +1,45 @@
+.errorOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    /* maior que o modal anterior */
+}
+
+.errorModal {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    min-width: 400px;
+    z-index: 2001;
+    transform: translateY(-30px);
+    opacity: 0;
+    animation: modalIn 0.3s forwards;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.botao {
+    border: 1px solid rgba(128, 128, 128, 0.501);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+@keyframes modalIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

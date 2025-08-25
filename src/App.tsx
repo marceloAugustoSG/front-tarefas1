@@ -98,7 +98,6 @@ function App() {
     <div className={styles.container}>
       <h2>Lista de tarefas {loading && '(carregando...)'}</h2>
       <button className={styles.botaoAddTarefa} onClick={() => { setEditTask(null); setShowModal(true); }} disabled={saving}>Adicionar tarefa</button>
-
       <TaskModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} saving={saving} task={editTask || undefined} />
       <DeleteModal open={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={handleDelete} saving={saving} taskTitle={taskToDelete?.titulo} />
       <ErrorModal open={error !== null} onClose={() => setError(null)} errorMessage={error} />

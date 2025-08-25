@@ -14,7 +14,10 @@ const DeleteModal: FC<Props> = ({ open, onClose, onConfirm, saving, taskTitle })
     return (
         <Modal open={open} onClose={onClose}>
             <h3>Confirmar Exclusão</h3>
-            <p>Tem certeza que deseja excluir a tarefa "{taskTitle}"?</p>
+            <p>Tem certeza que deseja excluir a tarefa "
+                <strong className={styles.nomeTarefa}>{taskTitle}</strong>
+                "?
+            </p>
             <div className={styles.botoes}>
                 <button onClick={onClose} disabled={saving} className={styles.botao}>
                     Não

@@ -26,13 +26,12 @@ const TarefaItem: FC<Props> = ({
 }) => {
     const backgroundColor = task.custo > 1000 ? 'yellow' : 'white';
 
-    // Tratamento seguro da data
     let dataLocal: Date | null = null;
     if (task.data_limite) {
         const partes = task.data_limite.slice(0, 10).split('-').map(Number);
         if (partes.length === 3) {
             const [year, month, day] = partes;
-            dataLocal = new Date(year, month - 1, day); // mês é 0-indexado
+            dataLocal = new Date(year, month - 1, day);
         }
     }
 
@@ -49,7 +48,7 @@ const TarefaItem: FC<Props> = ({
         >
             <div className={styles.corpo}>
                 <span>#{index + 1}</span>
-                <strong>{task.titulo}</strong>
+                <strong className={task.titulo.length > 25 ? styles.nomeTarefa: ''}>{task.titulo}</strong>
                 <span>{moeda.format(task.custo)}</span>
                 <span>
                     Limite: {dataLocal ? dataLocal.toLocaleDateString('pt-BR') : 'Data inválida'}

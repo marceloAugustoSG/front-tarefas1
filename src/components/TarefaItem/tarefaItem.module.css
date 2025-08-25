@@ -13,6 +13,20 @@
     display: flex;
     gap: 20px;
     justify-content: space-between;
+    min-width: 0;
+}
+
+.nomeTarefa {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+@media (max-width: 500px) {
+    .corpo span {
+        font-size: 12px;
+    }
 }
 
 .acoes {

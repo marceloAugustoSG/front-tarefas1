@@ -1,10 +1,9 @@
-/* Formulário */
 .formGroup {
     display: flex;
     flex-direction: column;
     margin-bottom: 12px;
     gap: 4px;
-    width: 100%; /* ocupa todo o espaço disponível */
+    width: 100%;
 }
 
 .formGroup input {
@@ -13,7 +12,7 @@
     padding: 0 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* respeita padding + width */
+    box-sizing: border-box;
 }
 
 .formGroup input:focus {
@@ -29,13 +28,11 @@
     outline: 1px solid #ef4444;
 }
 
-/* Mensagem de erro */
 .error {
     color: #ef4444;
     font-size: 12px;
 }
 
-/* Botões do formulário */
 .botoes {
     display: flex;
     justify-content: flex-end;

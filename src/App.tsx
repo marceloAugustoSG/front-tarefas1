@@ -69,7 +69,7 @@ function App() {
         draggedIndex={draggedIndex}
         onEdit={(t) => { setEditTask(t); setShowModal(true); }}
         onDelete={(t) => { setTaskToDelete(t); setShowDeleteModal(true); }}
-        onDragStart={(e, i) => setDraggedIndex(i)}
+        onDragStart={(_e, i) => setDraggedIndex(i)}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(i) => { if (draggedIndex !== null) handleMove(tasks[draggedIndex].id, draggedIndex, i); setDraggedIndex(null); }}
         onDragEnd={() => setDraggedIndex(null)}

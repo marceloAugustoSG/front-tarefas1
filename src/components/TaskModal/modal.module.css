@@ -1,0 +1,58 @@
+/* Formulário */
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    gap: 4px;
+    width: 100%; /* ocupa todo o espaço disponível */
+}
+
+.formGroup input {
+    width: 100%;
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* respeita padding + width */
+}
+
+.formGroup input:focus {
+    outline: 1px solid #2563EB;
+    border-color: #2563EB;
+}
+
+.inputError {
+    border-color: #ef4444;
+}
+
+.inputError:focus {
+    outline: 1px solid #ef4444;
+}
+
+/* Mensagem de erro */
+.error {
+    color: #ef4444;
+    font-size: 12px;
+}
+
+/* Botões do formulário */
+.botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.botao {
+    border: 1px solid rgba(128, 128, 128, 0.501);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.botaoSalvar {
+    border: 0;
+    background-color: #2563EB;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+}

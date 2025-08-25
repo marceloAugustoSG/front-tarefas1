@@ -1,208 +1,82 @@
-import { useState, type DragEvent } from 'react'
-import styles from './app.module.css'
-import Modal from './components/Modal'
-import { FaPencilAlt, FaTrash } from 'react-icons/fa'
+
+import type { Tarefa } from './types/Tarefas';
+import { fetchTasks, createTask, updateTask, deleteTask, moveTask } from './api/tarefas';
+import TaskModal from './components/TaskModal';
+import DeleteModal from './components/DeleteModal';
+import TarefasList from './components/ListaTarefas';
+import styles from '@/app.module.css';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [showModal, setShowModal] = useState(false)
-  const [modalType, setModalType] = useState<'add' | 'edit'>('add')
-  const [tasks, setTasks] = useState<{ id: string; title: string; cost: string; date: string }[]>([])
+  const [tasks, setTasks] = useState<Tarefa[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const [editTask, setEditTask] = useState<{
-    id: string; title: string; cost: string; date: string
-  } | null>(null)
+  const [showModal, setShowModal] = useState(false);
+  const [editTask, setEditTask] = useState<Tarefa | null>(null);
 
-  const [title, setTitle] = useState('')
-  const [cost, setCost] = useState('')
-  const [date, setDate] = useState('')
-  const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState<{ id: string; title: string; cost: string; date: string } | null>(null);
+  const [taskToDelete, setTaskToDelete] = useState<Tarefa | null>(null);
 
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
-  const handleAdd = () => {
-    setModalType('add')
-    setEditTask(null)
-    setTitle('')
-    setCost('')
-    setDate('')
-    setShowModal(true)
-  }
+  const loadTasks = async () => {
+    try { setLoading(true); setError(null); const data = await fetchTasks(); setTasks(data); }
+    catch (e: any) { setError(e.message); } finally { setLoading(false); }
+  };
 
-  const handleEdit = (id: string) => {
-    const taskToEdit = tasks.find(task => task.id === id);
-    if (!taskToEdit) return;
-    setModalType('edit')
-    setEditTask(taskToEdit)
-    setTitle(taskToEdit.title)
-    setCost(taskToEdit.cost)
-    setDate(taskToEdit.date)
-    setShowModal(true)
-  }
+  useEffect(() => { loadTasks(); }, []);
 
-  const handleDelete = (task: { id: string; title: string; cost: string; date: string }) => {
-    setTaskToDelete(task);
-    setShowDeleteModal(true);
-  }
+  const handleSave = async (payload: { titulo: string; custo: number; data_limite: string }) => {
+    try {
+      setSaving(true);
+      if (editTask) await updateTask(editTask.id, payload);
+      else await createTask(payload);
+      setShowModal(false);
+      setEditTask(null);
+      await loadTasks();
+    } catch (e: any) { alert(e.message); } finally { setSaving(false); }
+  };
 
-  const handleConfirmDelete = () => {
+  const handleDelete = async () => {
     if (!taskToDelete) return;
-    setTasks(tasks.filter(task => task.id !== taskToDelete.id));
-    setShowDeleteModal(false);
-  }
-
-  const handleClose = () => {
-    setShowModal(false)
-    setEditTask(null);
-    setTitle('')
-    setCost('')
-    setDate('')
-  }
-
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(false);
-    setTaskToDelete(null);
-  }
-  const handleSave = () => {
-    if (modalType === 'add') {
-      const newTask = { title, cost, date, id: String(Date.now()) }
-      setTasks([...tasks, newTask])
-    } else if (editTask) {
-      const updatedTasks = tasks.map(task =>
-        task.id === editTask.id ? { ...task, title, cost, date } : task
-      );
-      setTasks(updatedTasks);
-    }
-    handleClose();
-  }
-
-  const handleDragStart = (e: DragEvent<HTMLDivElement>, index: number) => {
-    setDraggedItemIndex(index);
-    e.dataTransfer.setData('text/plain', index.toString());
+    try { setSaving(true); await deleteTask(taskToDelete.id); setShowDeleteModal(false); setTaskToDelete(null); await loadTasks(); }
+    catch (e: any) { alert(e.message); } finally { setSaving(false); }
   };
 
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (index: number) => {
-    if (draggedItemIndex === null || draggedItemIndex === index) return;
-
+  const handleMove = async (taskId: number, from: number, to: number) => {
+    if (from === to) return;
+    const direction = from > to ? 'up' : 'down';
     const newTasks = [...tasks];
-    const [draggedItem] = newTasks.splice(draggedItemIndex, 1);
-    newTasks.splice(index, 0, draggedItem);
-
+    const [moved] = newTasks.splice(from, 1);
+    newTasks.splice(to, 0, moved);
     setTasks(newTasks);
-    setDraggedItemIndex(null);
+    try { await moveTask(taskId, direction); await loadTasks(); } catch (e: any) { alert(e.message); await loadTasks(); }
   };
-
-  const handleDragEnd = () => {
-    setDraggedItemIndex(null);
-  }
-
-  console.log(tasks)
 
   return (
     <div className={styles.container}>
-      <h2>Lista de tarefas</h2>
-      <button
-        className={styles.botaoAddTarefa}
-        onClick={handleAdd}
-      >
-        Adicionar tarefa
-      </button>
-      <br />
-      <br />
+      <h2>Lista de tarefas {loading && '(carregando...)'}</h2>
+      {error && <span className={styles.error}>{error}</span>}
+      <button className={styles.botaoAddTarefa} onClick={() => { setEditTask(null); setShowModal(true); }} disabled={saving}>Adicionar tarefa</button>
 
-      <Modal open={showModal} onClose={handleClose}>
-        <h3>{modalType === 'add' ? 'Nova tarefa' : 'Atualizar tarefa'}</h3>
-        <br />
-        <div className={styles.formGroup}>
-          <label>Nome da tarefa</label>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Nome da tarefa"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Custo</label>
-          <input
-            type="text"
-            placeholder="Ex: 19,00"
-            value={cost}
-            onChange={e => setCost(e.target.value.replace(/[^0-9,]/g, ''))}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Data limite</label>
-          <input
-            type="date"
-            value={date}
-            onChange={e => setDate(e.target.value)}
-          />
-        </div>
-        <div className={styles.botoes}>
-          <button className={styles.botao} onClick={() => handleClose()}>Fechar</button>
-          <button className={styles.botaoSalvar} onClick={() => handleSave()}>
-            Salvar
-          </button>
-        </div>
-      </Modal>
+      <TaskModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} saving={saving} task={editTask || undefined} />
+      <DeleteModal open={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={handleDelete} saving={saving} taskTitle={taskToDelete?.titulo} />
 
-      <Modal open={showDeleteModal} onClose={handleCloseDeleteModal}>
-        <h3>Confirmar Exclusão</h3>
-        <br />
-        <p>
-          Tem certeza que deseja excluir a tarefa "{taskToDelete?.title}"?
-        </p>
-        <br />
-        <div className={styles.botoes}>
-          <button className={styles.botao} onClick={handleCloseDeleteModal}>
-            Não
-          </button>
-          <button className={styles.botaoExcluirTarefa} onClick={handleConfirmDelete}>
-            Sim
-          </button>
-        </div>
-      </Modal>
-
-      {tasks.map((task, index) => (
-        <div
-          key={task.id}
-          draggable
-          onDragStart={(e) => handleDragStart(e, index)}
-          onDragOver={handleDragOver}
-          onDrop={() => handleDrop(index)}
-          onDragEnd={handleDragEnd}
-          className={styles.container_tarefa}
-          style={{ opacity: draggedItemIndex === index ? 0.5 : 1 }}
-        >
-          <div className={styles.corpo}>
-
-            <span>#{index + 1}</span>
-            <strong>{task.title}</strong>
-            <span>R$ {task.cost}</span>
-            <span>Limite: {task.date}</span>
-          </div>
-
-          <div className={styles.acoes}>
-            <button className={styles.botao} onClick={() => handleEdit(task.id)} title="Editar tarefa">
-              <FaPencilAlt />
-            </button>
-            <button className={styles.botaoExcluirTarefa} onClick={() => handleDelete(task)} title="Excluir tarefa">
-              <FaTrash />
-            </button>
-          </div>
-
-        </div>
-      ))}
+      <TarefasList
+        tasks={tasks}
+        draggedIndex={draggedIndex}
+        onEdit={(t) => { setEditTask(t); setShowModal(true); }}
+        onDelete={(t) => { setTaskToDelete(t); setShowDeleteModal(true); }}
+        onDragStart={(e, i) => setDraggedIndex(i)}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(i) => { if (draggedIndex !== null) handleMove(tasks[draggedIndex].id, draggedIndex, i); setDraggedIndex(null); }}
+        onDragEnd={() => setDraggedIndex(null)}
+        saving={saving}
+      />
     </div>
-
-
-  )
+  );
 }
 
-export default App
+export default App;

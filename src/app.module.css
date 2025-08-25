@@ -2,87 +2,10 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.container_tarefa {
-    display: flex;
-    gap: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.501);
-    justify-content: space-between;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-.corpo {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.acoes {
-    display: flex;
-    gap: 20px;
-}
-
-.botao {
-    border: 1px solid rgba(128, 128, 128, 0.501);
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.botaoSalvar {
-    border: 0;
-    background-color: #2563EB;
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.botoes {
-    display: flex;
-    justify-content: end;
-    gap: 10px;
-}
-
 .botaoAddTarefa {
     background-color: #16A34A;
     border: 0;
     color: white;
     border-radius: 5px;
     padding: 10px;
-}
-
-.botaoExcluirTarefa {
-    background-color: #ae1f0f;
-    border: 0;
-    color: white;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.input {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.formGroup input {
-    width: 100%;
-    height: 30px;
-    border: 1px solid rgba(128, 128, 128, 0.501);
-    border-radius: 2px;
-    box-sizing: border-box;
-}
-
-label {
-    font-size: 14px;
-}
-
-/* modal */
-
-.formGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    gap: 4px;
 }

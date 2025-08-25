@@ -1,5 +1,8 @@
 # 📝 Lista de Tarefas - Frontend
 
+# Link do deploy :
+https://front-tarefas1.vercel.app/
+
 Frontend desenvolvido em **React** com **Vite** para uma aplicação de lista de tarefas.
 
 ---

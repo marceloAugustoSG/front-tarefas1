@@ -16,7 +16,7 @@ interface Props {
 }
 
 const TarefasList: FC<Props> = (props) => {
-    if (props.tasks.length === 0) return <p style={{ opacity: 0.7 }}>Nenhuma tarefa cadastrada.</p>;
+    if (props.tasks.length === 0) return <p className={styles.tasklen}>Nenhuma tarefa cadastrada.</p>;
 
     return (
         <div className={styles.lista}>

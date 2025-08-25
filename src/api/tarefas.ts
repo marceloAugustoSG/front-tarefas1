@@ -1,6 +1,6 @@
 import type { Tarefa } from "../types/Tarefas";
 
-const API = 'http://localhost:3000/tarefas';
+const API = 'https://back-tarefas-ancient-voice-361.fly.dev/tarefas';
 
 export const fetchTasks = async (): Promise<Tarefa[]> => {
     const res = await fetch(API);

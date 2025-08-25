@@ -41,7 +41,10 @@ const TarefaItem: FC<Props> = ({
                 <span>#{index + 1}</span>
                 <strong>{task.titulo}</strong>
                 <span>{moeda.format(task.custo)}</span>
-                <span>Limite: {task.data_limite.split('T')[0]}</span>
+                <span>
+                    Limite: {new Date(task.data_limite).toLocaleDateString('pt-BR')}
+                </span>
+
             </div>
             <div className={styles.acoes}>
                 <button onClick={() => onEdit(task)} disabled={saving} className={styles.botao}>

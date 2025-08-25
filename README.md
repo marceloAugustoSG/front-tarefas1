@@ -1,69 +1,58 @@
-# React + TypeScript + Vite
+# 📝 Lista de Tarefas - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Link do deploy :
+https://front-tarefas1.vercel.app/
 
-Currently, two official plugins are available:
+Frontend desenvolvido em **React** com **Vite** para uma aplicação de lista de tarefas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Como rodar o projeto
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Clonar o repositório
+```bash
+git clone https://github.com/seu-usuario/nome-do-repo-frontend.git
+cd nome-do-repo-frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Instalar dependências
+```bash
+# Usando npm
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Ou usando yarn
+yarn install
 ```
+
+### 3. Executar o projeto
+```bash
+# Usando npm
+npm run dev
+
+# Ou usando yarn
+yarn dev
+```
+
+Após executar o comando, o projeto estará disponível em `http://localhost:5173` (ou outra porta, caso a 5173 esteja em uso).
+
+---
+
+## ✨ Funcionalidades
+
+- **Listar tarefas**: Visualização de todas as tarefas.
+- **Adicionar tarefas**: Criação de novas tarefas com título, custo e data limite.
+- **Editar tarefas**: Atualização de informações de uma tarefa existente.
+- **Excluir tarefas**: Remoção de tarefas.
+- **Reordenar tarefas**: Alteração da ordem das tarefas com funcionalidade de arrastar e soltar (drag and drop).
+
+---
+
+## 🛠 Tecnologias
+
+- React
+- Vite
+- TypeScript
+- React Icons
+---
+
+📖 Projeto desenvolvido para aprovação de teste técnico. Marcelo Augusto Soares Gomes

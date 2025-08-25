@@ -1,5 +1,5 @@
 import type { FC, DragEvent } from 'react';
-import styles from './TarefaItem.module.css';
+import styles from './tarefaItem.module.css';
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import type { Tarefa } from '../../types/Tarefas';
 

@@ -24,7 +24,7 @@ const TarefaItem: FC<Props> = ({
     onDragStart, onDragOver, onDrop, onDragEnd,
     saving
 }) => {
-    const backgroundColor = task.custo > 1000 ? 'yellow' : 'white';
+    const backgroundColor = task.custo >= 1000 ? 'yellow' : 'white';
 
     let dataLocal: Date | null = null;
     if (task.data_limite) {
